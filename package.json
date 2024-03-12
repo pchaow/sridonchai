@@ -1,0 +1,15 @@
+{
+  "name": "sridonchai",
+  "version": "1.0.0",
+  "description": "sridonchai water management",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "cd client && yarn install",
+    "dev": "cd client && yarn dev",
+    "build": "cd client && yarn build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
