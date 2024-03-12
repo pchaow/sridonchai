@@ -228,4 +228,4 @@ export_python_type_annotations = True
 # }
 
 
-website_route_rules = [{'from_route': '/client/<path:app_path>', 'to_route': 'client'},]
+website_route_rules = [{'from_route': '/client/<path:app_path>', 'to_route': 'client'}, {'from_route': '/client/<path:app_path>', 'to_route': 'client'},]
