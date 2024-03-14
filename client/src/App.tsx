@@ -1,26 +1,42 @@
 import './App.css'
-import {FrappeProvider} from 'frappe-react-sdk'
-import {HashRouter,Routes,Route} from "react-router-dom";
+import {Routes, Route, BrowserRouter} from "react-router-dom";
 import Home from "./views/home.tsx";
-import Test from "./views/test.tsx";
 import AppProvider from "./providers/AppProvider.tsx";
+import {NextUIProvider} from '@nextui-org/react'
+import {OAuthPopup} from "@tasoskakour/react-use-oauth2";
+import AuthProvider from "./providers/AuthProvider.tsx";
+
+import Dashboard from "./views/dashboard";
+function Relocate() {
+    window.location.href = `${document.location.origin}/client`
+    return (<div></div>)
+}
 
 function App() {
 
     return (
         <div className="App">
-            <FrappeProvider>
-                <AppProvider>
+            <NextUIProvider>
+                <main className="dark text-foreground bg-background h-svh">
+                <AppProvider url="https://sridonchai.chaowdev.xyz">
+                    <AuthProvider>
+                        <BrowserRouter basename="/client">
+                            <Routes>
+                                <Route path="" element={<Home></Home>}/> {/* 👈 Renders at /#/app/ */}
+                                <Route path="/home" element={<Dashboard></Dashboard>}/> {/* 👈 Renders at /#/app/ */}
+                                <Route path="/login" element={<OAuthPopup/>}/> {/* 👈 Renders at /#/app/ */}
+                            </Routes>
+                        </BrowserRouter>
 
-                <HashRouter>
-                    <Routes>
-                        <Route path="/" element={<Home></Home>}/> {/* 👈 Renders at /#/app/ */}
-                        <Route path="/test" element={<Test></Test>}/> {/* 👈 Renders at /#/app/ */}
-                    </Routes>
-                </HashRouter>
+                        <BrowserRouter basename="">
+                            <Routes>
+                                <Route path="" element={<Relocate/>}/> {/* 👈 Renders at /#/app/ */}
+                            </Routes>
+                        </BrowserRouter>
+                    </AuthProvider>
                 </AppProvider>
-
-            </FrappeProvider>
+                    </main>
+            </NextUIProvider>
         </div>
     )
 }
