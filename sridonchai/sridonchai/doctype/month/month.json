@@ -12,18 +12,22 @@
   {
    "fieldname": "month",
    "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "\u0e40\u0e14\u0e37\u0e2d\u0e19",
    "options": "1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12"
   },
   {
    "fieldname": "year",
    "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "\u0e1b\u0e35 \u0e04.\u0e28."
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-03-15 10:17:05.624359",
+ "modified": "2024-03-15 21:38:00.108592",
  "modified_by": "Administrator",
  "module": "Sridonchai",
  "name": "Month",

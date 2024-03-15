@@ -86,7 +86,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-03-15 20:17:08.622429",
+ "modified": "2024-03-15 22:10:21.423805",
  "modified_by": "Administrator",
  "module": "Sridonchai",
  "name": "Customer",
@@ -106,7 +106,7 @@
    "write": 1
   }
  ],
- "search_fields": "firstname, meter_address",
+ "search_fields": "meter_address, firstname, lastname ",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": []
