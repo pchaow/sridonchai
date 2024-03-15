@@ -1,0 +1,56 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "field:manager",
+ "creation": "2024-03-15 20:36:59.630158",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "manager",
+  "customers"
+ ],
+ "fields": [
+  {
+   "fieldname": "manager",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Manager",
+   "link_filters": "[[\"ignore_user_type\",\"=\",1]]",
+   "options": "User",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "customers",
+   "fieldtype": "Table",
+   "label": "Customers",
+   "options": "CustomerManagerChild"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-03-15 20:48:31.553609",
+ "modified_by": "Administrator",
+ "module": "Sridonchai",
+ "name": "CustomerManager",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

@@ -1,0 +1,113 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "field:customer_id",
+ "creation": "2024-03-15 09:49:43.043219",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "customer_id",
+  "status",
+  "section_break_llqa",
+  "firstname",
+  "phonenumber",
+  "address",
+  "column_break_kdgb",
+  "lastname",
+  "personal_id",
+  "section_break_grzb",
+  "meter_address",
+  "column_break_cinv"
+ ],
+ "fields": [
+  {
+   "fieldname": "firstname",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "\u0e0a\u0e37\u0e48\u0e2d",
+   "reqd": 1
+  },
+  {
+   "fieldname": "lastname",
+   "fieldtype": "Data",
+   "label": "\u0e19\u0e32\u0e21\u0e2a\u0e01\u0e38\u0e25"
+  },
+  {
+   "fieldname": "phonenumber",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "\u0e40\u0e1a\u0e2d\u0e23\u0e4c\u0e42\u0e17\u0e23"
+  },
+  {
+   "fieldname": "personal_id",
+   "fieldtype": "Data",
+   "label": "\u0e40\u0e25\u0e02\u0e1a\u0e31\u0e15\u0e23\u0e1b\u0e23\u0e30\u0e08\u0e33\u0e15\u0e31\u0e27"
+  },
+  {
+   "fieldname": "address",
+   "fieldtype": "Small Text",
+   "label": "\u0e17\u0e35\u0e48\u0e2d\u0e22\u0e39\u0e48"
+  },
+  {
+   "fieldname": "customer_id",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "\u0e23\u0e2b\u0e31\u0e2a\u0e25\u0e39\u0e01\u0e04\u0e49\u0e32",
+   "unique": 1
+  },
+  {
+   "fieldname": "section_break_llqa",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_kdgb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_grzb",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_cinv",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "1",
+   "fieldname": "status",
+   "fieldtype": "Check",
+   "label": "\u0e43\u0e0a\u0e49\u0e07\u0e32\u0e19"
+  },
+  {
+   "fieldname": "meter_address",
+   "fieldtype": "Small Text",
+   "label": "\u0e2a\u0e16\u0e32\u0e19\u0e17\u0e35\u0e48\u0e43\u0e0a\u0e49\u0e19\u0e49\u0e33"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-03-15 20:17:08.622429",
+ "modified_by": "Administrator",
+ "module": "Sridonchai",
+ "name": "Customer",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "search_fields": "firstname, meter_address",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
