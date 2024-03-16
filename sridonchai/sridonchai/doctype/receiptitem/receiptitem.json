@@ -1,0 +1,75 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-03-16 13:57:41.783744",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "invoice",
+  "month",
+  "invoice_type",
+  "unit_price",
+  "total_unit",
+  "total"
+ ],
+ "fields": [
+  {
+   "fieldname": "invoice",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "\u0e43\u0e1a\u0e41\u0e08\u0e49\u0e07\u0e2b\u0e19\u0e35\u0e49",
+   "options": "Invoice"
+  },
+  {
+   "fetch_from": "invoice.type",
+   "fieldname": "invoice_type",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "\u0e1b\u0e23\u0e30\u0e40\u0e20\u0e17"
+  },
+  {
+   "fetch_from": "invoice.total",
+   "fieldname": "total",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "\u0e23\u0e27\u0e21"
+  },
+  {
+   "fetch_from": "invoice.total_unit",
+   "fieldname": "total_unit",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "\u0e08\u0e33\u0e19\u0e27\u0e19\u0e2b\u0e19\u0e48\u0e27\u0e22"
+  },
+  {
+   "fetch_from": "invoice.unit_price",
+   "fieldname": "unit_price",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "\u0e23\u0e32\u0e04\u0e32\u0e15\u0e48\u0e2d\u0e2b\u0e19\u0e48\u0e27\u0e22"
+  },
+  {
+   "fetch_from": "invoice.month",
+   "fieldname": "month",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "\u0e07\u0e27\u0e14\u0e40\u0e14\u0e37\u0e2d\u0e19"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-03-16 14:11:41.945656",
+ "modified_by": "Administrator",
+ "module": "Sridonchai",
+ "name": "ReceiptItem",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

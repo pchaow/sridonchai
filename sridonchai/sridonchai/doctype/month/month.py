@@ -23,6 +23,20 @@ class Month(Document):
 		self.name = f"{self.month:>02}-{self.year:>04}"
 		return self.name
 
+
+	def get_month_name(self,month,year):
+		return f"{month:>02}-{year:>04}"
+	def get_prev_month(self):
+		month = int(self.month)
+		year = int (self.year)
+
+		month = month = 1
+
+		year = year - 1 if month == 0 else year
+		month = month if month >= 1 else 12
+
+		return frappe.get_doc("Month",self.get_month_name(month,year))
+
 	pass
 
 

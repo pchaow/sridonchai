@@ -9,13 +9,17 @@
   "section_break_yhna",
   "type",
   "month",
+  "column_break_rolg",
   "customer",
   "section_break_yevd",
   "previous_meter_read",
   "current_meter_read",
+  "normal",
+  "column_break_jfbo",
   "total_unit",
   "unit_price",
-  "total"
+  "total",
+  "amended_from"
  ],
  "fields": [
   {
@@ -75,25 +79,51 @@
    "fieldtype": "Currency",
    "in_list_view": 1,
    "label": "\u0e23\u0e27\u0e21",
+   "options": "THB",
    "precision": "2",
-   "reqd": 1
-  },
-  {
-   "default": "Draft",
-   "fieldname": "status",
-   "fieldtype": "Select",
-   "label": "\u0e2a\u0e16\u0e32\u0e19\u0e30",
-   "options": "Draft\nSubmitted\nPaid\nCanceled",
    "reqd": 1
   },
   {
    "fieldname": "section_break_yhna",
    "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_jfbo",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "1",
+   "fieldname": "normal",
+   "fieldtype": "Check",
+   "label": " \u0e1b\u0e01\u0e15\u0e34",
+   "mandatory_depends_on": "eval:doc.type == \"\u0e04\u0e48\u0e32\u0e19\u0e49\u0e33\";\n"
+  },
+  {
+   "fieldname": "column_break_rolg",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "options": "Draft\nSubmitted\nPaid\nCancelled"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Invoice",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-03-15 20:05:35.732975",
+ "modified": "2024-03-16 16:12:02.270795",
  "modified_by": "Administrator",
  "module": "Sridonchai",
  "name": "Invoice",

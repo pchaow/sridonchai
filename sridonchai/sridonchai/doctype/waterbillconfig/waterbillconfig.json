@@ -1,0 +1,46 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-03-16 10:03:01.355522",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "unit_price",
+  "maintenance_fee"
+ ],
+ "fields": [
+  {
+   "fieldname": "unit_price",
+   "fieldtype": "Data",
+   "label": "\u0e23\u0e32\u0e04\u0e32\u0e15\u0e48\u0e2d\u0e2b\u0e19\u0e48\u0e27\u0e22"
+  },
+  {
+   "fieldname": "maintenance_fee",
+   "fieldtype": "Data",
+   "label": "\u0e04\u0e48\u0e32\u0e1a\u0e33\u0e23\u0e38\u0e07\u0e21\u0e34\u0e40\u0e15\u0e2d\u0e23\u0e4c\u0e15\u0e48\u0e2d\u0e40\u0e14\u0e37\u0e2d\u0e19"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2024-03-16 10:04:23.155088",
+ "modified_by": "Administrator",
+ "module": "Sridonchai",
+ "name": "WaterBillConfig",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
