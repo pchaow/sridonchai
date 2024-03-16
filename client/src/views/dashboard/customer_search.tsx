@@ -65,7 +65,7 @@ export default function CustomerSearch() {
 
                 <NavbarContent className="m-0 p-0 gap-1">
                     <NavbarItem className="gap-1">
-                        <Button isIconOnly variant="light" onClick={()=>navigate("home")} >
+                        <Button isIconOnly variant="light" onClick={()=>navigate("/home")} >
                             <IoArrowBack className="w-6 h-6"/>
                         </Button>
                     </NavbarItem>
