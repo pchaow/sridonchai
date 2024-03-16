@@ -25,7 +25,7 @@ export default function Home() {
     }
 
     return (
-        <div className="flex h-screen justify-center items-center">
+        <div className="flex min-h-screen justify-center items-center">
             <Card className="w-3/4 min-w-[300px]">
                 <CardHeader>
                     <div className="flex flex-col">

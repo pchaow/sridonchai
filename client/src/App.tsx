@@ -7,6 +7,8 @@ import {OAuthPopup} from "@tasoskakour/react-use-oauth2";
 import AuthProvider from "./providers/AuthProvider.tsx";
 
 import Dashboard from "./views/dashboard";
+import CustomerSearch from "./views/dashboard/customer_search.tsx"
+import CustomerView from "./views/dashboard/customer_view.tsx"
 
 function Relocate() {
     window.location.href = `${document.location.origin}/client`
@@ -18,7 +20,7 @@ function App() {
     return (
         <div className="App">
             <NextUIProvider>
-                <main className="dark text-foreground bg-background h-svh">
+                <main className="dark text-foreground bg-background  min-h-svh">
                     <AppProvider url="https://sridonchai.chaowdev.xyz">
                         <AuthProvider>
                             <BrowserRouter basename="/client">
@@ -26,9 +28,10 @@ function App() {
                                     <Route path="" element={<Home></Home>}/>
                                     <Route path="/home">
                                         <Route path="" element={<Dashboard></Dashboard>}/>
-                                        <Route path="search" element={<div>ตรวจสอบค่าน้ำ</div>}/>
+                                        <Route path="search" element={<CustomerSearch/>}/>
                                         <Route path="record" element={<div>บันทึก</div>}/>
                                         <Route path="payment" element={<div>ชำระเงิน</div>}/>
+                                        <Route path="view/:customer" element={<CustomerView/>}/>
                                     </Route>
                                     <Route path="/login" element={<OAuthPopup/>}/>
                                 </Routes>
