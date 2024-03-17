@@ -48,7 +48,7 @@ export default function CustomerSearch() {
 
     const customer_card = (customer: any) => {
         return (
-            <Card className="m-3 background-primary" isPressable key={customer.name} onClick={()=>{navigate(`/home/view/${customer.name}`)}}>
+            <Card className="m-3 background-primary" isPressable key={customer.name} onClick={()=>{navigate(`/home/customer/${customer.name}/view/`)}}>
                 <CardBody>
                     <p className="font-bold">หมายเลขผู้ใช้น้ำ : {customer.name}</p>
                     <p className="font-bold">{customer.firstname} {customer.lastname}</p>

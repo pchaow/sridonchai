@@ -9,6 +9,7 @@ import AuthProvider from "./providers/AuthProvider.tsx";
 import Dashboard from "./views/dashboard";
 import CustomerSearch from "./views/dashboard/customer_search.tsx"
 import CustomerView from "./views/dashboard/customer_view.tsx"
+import CustomerRecord from "./views/dashboard/customer_record.tsx"
 
 function Relocate() {
     window.location.href = `${document.location.origin}/client`
@@ -31,7 +32,9 @@ function App() {
                                         <Route path="search" element={<CustomerSearch/>}/>
                                         <Route path="record" element={<div>บันทึก</div>}/>
                                         <Route path="payment" element={<div>ชำระเงิน</div>}/>
-                                        <Route path="view/:customer" element={<CustomerView/>}/>
+                                        <Route path="customer/:customer/view" element={<CustomerView/>}/>
+                                        <Route path="customer/:customer/record" element={<CustomerRecord/>}/>
+
                                     </Route>
                                     <Route path="/login" element={<OAuthPopup/>}/>
                                 </Routes>
