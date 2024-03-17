@@ -152,7 +152,9 @@ export default function CustomerView() {
                     </Tab>
                 </Tabs>
 
-                <Button color="success" startContent={<FaPen/>} onClick={()=>{navigate(`/home/customer/${customerName}/record`)}}>
+                <Button color="success" startContent={<FaPen/>} onClick={() => {
+                    navigate(`/home/customer/${customerName}/record`)
+                }}>
                     บันทึกมาตรน้ำ
                 </Button>
 
