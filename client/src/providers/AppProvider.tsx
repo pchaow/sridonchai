@@ -1,5 +1,15 @@
-import React, {createContext, PropsWithChildren, useContext, useState} from "react";
+import React, {createContext, PropsWithChildren, useContext, useEffect, useState} from "react";
 import _axios, {AxiosInstance} from "axios";
+import {
+    Modal,
+    ModalContent,
+    ModalHeader,
+    ModalBody,
+    ModalFooter,
+    Button,
+    useDisclosure,
+    Spinner
+} from "@nextui-org/react"
 
 interface AppProviderContextInterface {
     name: string;
@@ -10,6 +20,10 @@ interface AppProviderContextInterface {
     clientId: string;
     clientSecret: string;
     redirectUrl: string;
+
+    closeLoading: any;
+    showLoading: any;
+    isLoading: any;
 
 }
 
@@ -29,9 +43,59 @@ export default function AppProvider({url, children}: PropsWithChildren<{ url: st
         withCredentials: true,
     })
 
+    axios.interceptors.request.use(request => {
+            onOpen()
+            return request
+        }, error => {
+            onClose()
+            return Promise.reject(error)
+        }
+    )
 
+    axios.interceptors.response.use(
+        response => {
+            // intercept response...
+            onClose()
+            return response
+        },
+        error => {
+            // intercept errors
+            onClose()
+            return Promise.reject(error)
+        }
+    )
+
+
+    const {isOpen, onOpen, onOpenChange, onClose} = useDisclosure();
     return (
-        <AppProviderContext.Provider value={{name, axios, url, clientId, redirectUrl, clientSecret, client, setClient}}>
+        <AppProviderContext.Provider value={{
+            axios,
+            client,
+            clientId,
+            clientSecret,
+            closeLoading: onClose,
+            isLoading: isOpen,
+            name,
+            redirectUrl,
+            setClient,
+            showLoading: onOpen,
+            url
+        }}>
+            <Modal placement="center" isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false}
+                   isKeyboardDismissDisabled={true} hideCloseButton={true}
+                   size="xs"
+            >
+                <ModalContent>
+                    <>
+                        <ModalHeader className="flex flex-col gap-1">กรุณารอสักครู่</ModalHeader>
+                        <ModalBody>
+                            <Spinner/>
+                        </ModalBody>
+                        <ModalFooter></ModalFooter>
+                    </>
+                </ModalContent>
+            </Modal>
+
             {children}
         </AppProviderContext.Provider>)
 }

@@ -69,14 +69,38 @@ export default function AuthProvider({children}: PropsWithChildren): React.React
             }
 
         }
+        const {showLoading,closeLoading,isLoading} = useAppProvider()
 
-        return _axios.create({
+        let instance = _axios.create({
             baseURL: url,
             withCredentials: true,
             headers: {
                 Authorization: "Bearer " + token
             }
         })
+
+        instance.interceptors.request.use(request => {
+                showLoading()
+                return request
+            }, error => {
+                onClose()
+                return Promise.reject(error)
+            }
+        )
+
+        instance.interceptors.response.use(
+            response => {
+                // intercept response...
+                closeLoading()
+                return response
+            },
+            error => {
+                // intercept errors
+                closeLoading()
+                return Promise.reject(error)
+            }
+        )
+        return instance
     }
 
     const getTokenFromLocalStorage = () => {
