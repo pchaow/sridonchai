@@ -24,6 +24,7 @@ import {IoArrowBack} from "react-icons/io5";
 import {useNavigate, useParams} from "react-router-dom";
 import {FaPen, FaMoneyBill} from "react-icons/fa6";
 import _ from 'underscore';
+import {useAppProvider} from "../../providers/AppProvider.tsx";
 
 export default function CustomerRecord() {
 
@@ -49,15 +50,22 @@ export default function CustomerRecord() {
         status: 'Draft',
     })
 
+    const {showLoading,closeLoading} = useAppProvider()
+
+
+
     const load_customers = async () => {
+        showLoading()
         let customer_response = await client.post("/api/method/sridonchai.sridonchai.doctype.customer.customer.load_customer", {
             ...params
         }).then(r => r.data)
         console.log(customer_response)
         setCustomer(customer_response.message.customer)
+        closeLoading()
     }
 
     const load_months = async () => {
+        showLoading()
         let response = await client.get("/api/resource/Month", {
             params: {
                 fields: `["month","year","name"]`,
@@ -71,13 +79,16 @@ export default function CustomerRecord() {
             return (parseInt(x.year) * 100 + parseInt(x.month)) * -1
         })
         setMonths(data)
+        closeLoading()
 
     }
 
     const load_config = async () => {
+        showLoading()
         let {message} = await client.post("/api/method/sridonchai.sridonchai.doctype.waterbillconfig.waterbillconfig.load").then(r => r.data)
         console.log(message)
         setConfig(message)
+        closeLoading()
     }
 
     useEffect(() => {
@@ -141,6 +152,7 @@ export default function CustomerRecord() {
                 'customer': customerName,
                 'type': "ค่าน้ำ"
             }
+            showLoading()
 
             let res = await client.post("/api/method/sridonchai.sridonchai.doctype.invoice.invoice.get_record_invoice_data", payload, {
                 headers: {
@@ -148,6 +160,7 @@ export default function CustomerRecord() {
                 }
             }).then(r => r.data)
 
+            closeLoading()
 
             if (res.message.current_invoice) {
                 let updateRecordForm = {
@@ -265,9 +278,11 @@ export default function CustomerRecord() {
             invoice.month = Array.from(invoice.month)[0]
             invoice.normal = invoice.normal == 1 ? true : false
 
+            showLoading()
             let {message} = await client.post("/api/method/sridonchai.sridonchai.doctype.invoice.invoice.create_update_invoice", {
                 invoice: invoice
             }).then(r => r.data)
+            closeLoading()
 
             console.log(message)
             _setRecordForm(message.invoice)
@@ -336,7 +351,7 @@ export default function CustomerRecord() {
             <div className="flex flex-col mx-6 my-0 gap-3 mb-3">
                 {customer_card(customer)}
 
-                <Select label="เดือน" name="month" className="max-w-xs" selectedKeys={recordForm.month}
+                <Select label="เดือน" name="month" className="w-full" selectedKeys={recordForm.month}
                         onChange={handleRecordForm}>
                     {months.map((m) => (
                         <SelectItem key={m.name} value={m.name} textValue={m.name}>

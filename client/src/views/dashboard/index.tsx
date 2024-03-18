@@ -20,17 +20,10 @@ export default function Dashboard() {
                     </CardBody>
                 </Card>
 
-                <Card isPressable className="bg-secondary-300 items-center justify-center" onClick={()=>navigate("/home/record")} >
+                <Card isPressable className="bg-secondary-300 items-center justify-center" onClick={()=>navigate("/home/report")} >
                     <CardBody className="items-center justify-center">
                         <FaPen className="w-16 h-16 text-success" />
-                        <span className="text-center text-xs font-bold">บันทึกมาตรน้ำ</span>
-                    </CardBody>
-                </Card>
-
-                <Card isPressable className="bg-secondary-300 items-center justify-center" onClick={()=>navigate("/home/payment")} >
-                    <CardBody className="items-center justify-center">
-                        <TbCurrencyBaht className="w-16 h-16 text-success" />
-                        <span className="text-center text-xs font-bold">รับชำระเงิน</span>
+                        <span className="text-center text-xs font-bold">ผลการดำเนินการ</span>
                     </CardBody>
                 </Card>
             </div>

@@ -12,6 +12,7 @@ import CustomerView from "./views/dashboard/customer_view.tsx"
 import CustomerRecord from "./views/dashboard/customer_record.tsx"
 import CustomerPayment from "./views/dashboard/customer_payment.tsx"
 import CustomerReceipt from "./views/dashboard/customer_receipt.tsx"
+import ManagerReport from "./views/dashboard/managerReport.tsx"
 
 function Relocate() {
     window.location.href = `${document.location.origin}/client`
@@ -32,13 +33,12 @@ function App() {
                                     <Route path="/home">
                                         <Route path="" element={<Dashboard></Dashboard>}/>
                                         <Route path="search" element={<CustomerSearch/>}/>
-                                        <Route path="record" element={<div>บันทึก</div>}/>
+                                        <Route path="report" element={<ManagerReport/>}/>
                                         <Route path="payment" element={<div>ชำระเงิน</div>}/>
                                         <Route path="customer/:customer/view" element={<CustomerView/>}/>
                                         <Route path="customer/:customer/record" element={<CustomerRecord/>}/>
                                         <Route path="customer/:customer/payment" element={<CustomerPayment/>}/>
                                         <Route path="customer/:customer/receipt" element={<CustomerReceipt/>}/>
-
                                     </Route>
                                     <Route path="/login" element={<OAuthPopup/>}/>
                                 </Routes>

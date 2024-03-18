@@ -24,6 +24,7 @@ import {IoArrowBack} from "react-icons/io5";
 import {useNavigate, useParams} from "react-router-dom";
 import {FaPen, FaMoneyBill} from "react-icons/fa6";
 import _ from 'underscore';
+import {useAppProvider} from "../../providers/AppProvider.tsx";
 
 export default function CustomerPayment() {
 
@@ -39,21 +40,27 @@ export default function CustomerPayment() {
     const [selectedColor, setSelectedColor] = useState("default");
     const [selectedKeys, setSelectedKeys] = useState(new Set([]))
 
+    const {showLoading, closeLoading} = useAppProvider()
+
 
     const load_customers = async () => {
+        showLoading()
         let customer_response = await client.post("/api/method/sridonchai.sridonchai.doctype.customer.customer.load_customer", {
             ...params
         }).then(r => r.data)
         console.log(customer_response)
         setCustomer(customer_response.message.customer)
+        closeLoading()
     }
 
     const load_unpaid_invoice = async () => {
+        showLoading()
         let {message} = await client.post("/api/method/sridonchai.sridonchai.doctype.invoice.invoice.load_unpiad_invoice", {
             customer: customerName
         }).then(r => r.data)
         setInvoices(message)
         console.log(message)
+        closeLoading()
 
     }
 
@@ -97,13 +104,13 @@ export default function CustomerPayment() {
             selInvoice = invoices
         } else {
             let invs = Array.from(selectedKeys)
-            selInvoice = invoices.filter(x => invs.find(y=> y == x.name))
+            selInvoice = invoices.filter(x => invs.find(y => y == x.name))
         }
 
-        if( selInvoice.length == 0){
+        if (selInvoice.length == 0) {
             setTotal(0.00)
-        }else {
-            setTotal(selInvoice.reduce((a,b)=> a+b.total,0))
+        } else {
+            setTotal(selInvoice.reduce((a, b) => a + b.total, 0))
         }
 
     }, [selectedKeys]);
@@ -117,6 +124,7 @@ export default function CustomerPayment() {
                 keys = Array.from(selectedKeys)
             }
 
+            showLoading()
             console.log(keys)
             let {message} = await client.post('/api/method/sridonchai.sridonchai.doctype.receipt.receipt.create_receipt', {
                 invoices: keys,
@@ -124,8 +132,10 @@ export default function CustomerPayment() {
 
             }).then(r => r.data)
             console.log(message)
+
             load_unpaid_invoice()
             setSelectedKeys(new Set([]))
+            closeLoading()
         }
 
     }

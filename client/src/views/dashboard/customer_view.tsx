@@ -21,6 +21,7 @@ import {
 import {IoArrowBack} from "react-icons/io5";
 import {useNavigate, useParams} from "react-router-dom";
 import {FaPen, FaMoneyBill,FaReceipt} from "react-icons/fa6";
+import {useAppProvider} from "../../providers/AppProvider.tsx";
 
 
 export default function CustomerView() {
@@ -33,14 +34,16 @@ export default function CustomerView() {
 
     const [customer, setCustomer] = useState()
     const [invoices, setInvoices] = useState([])
-
+    const {showLoading,closeLoading} = useAppProvider()
     const load_customers = async () => {
+        showLoading()
         let customer_response = await client.post("/api/method/sridonchai.sridonchai.doctype.customer.customer.load_customer", {
             ...params
         }).then(r => r.data)
         console.log(customer_response)
         setCustomer(customer_response.message.customer)
         setInvoices(customer_response.message.invoices)
+        closeLoading()
 
     }
 

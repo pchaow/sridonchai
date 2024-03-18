@@ -43,28 +43,6 @@ export default function AppProvider({url, children}: PropsWithChildren<{ url: st
         withCredentials: true,
     })
 
-    axios.interceptors.request.use(request => {
-            onOpen()
-            return request
-        }, error => {
-            onClose()
-            return Promise.reject(error)
-        }
-    )
-
-    axios.interceptors.response.use(
-        response => {
-            // intercept response...
-            onClose()
-            return response
-        },
-        error => {
-            // intercept errors
-            onClose()
-            return Promise.reject(error)
-        }
-    )
-
 
     const {isOpen, onOpen, onOpenChange, onClose} = useDisclosure();
     return (

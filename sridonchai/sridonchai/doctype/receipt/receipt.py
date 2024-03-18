@@ -52,10 +52,18 @@ def load_customer_receipt():
 	receiptdoc = frappe.qb.DocType("Receipt")
 	receipts = (frappe.qb.select(receiptdoc.name, receiptdoc.total, receiptdoc.payee,receiptdoc.date_received)
 				.from_(receiptdoc)
-				.where(receiptdoc.payor == customerName)).run(as_dict=True)
+				.where(receiptdoc.payor == customerName)
+				.orderby(receiptdoc.date_received,order=frappe.qb.desc)).run(as_dict=True)
+
 
 	return receipts
 
+@frappe.whitelist()
+def load_receipt() :
+	receipt_name = frappe.form_dict['receipt'] if 'receipt' in frappe.form_dict else None
+	assert  receipt_name != None and receipt_name != ''
+	receipt = frappe.get_doc("Receipt",receipt_name)
+	return receipt
 
 def background_receipt_submit(receipt):
 	doc = receipt

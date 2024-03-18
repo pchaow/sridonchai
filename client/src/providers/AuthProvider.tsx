@@ -67,9 +67,7 @@ export default function AuthProvider({children}: PropsWithChildren): React.React
                 setUser(null)
                 return null
             }
-
         }
-        const {showLoading,closeLoading,isLoading} = useAppProvider()
 
         let instance = _axios.create({
             baseURL: url,
@@ -78,28 +76,6 @@ export default function AuthProvider({children}: PropsWithChildren): React.React
                 Authorization: "Bearer " + token
             }
         })
-
-        instance.interceptors.request.use(request => {
-                showLoading()
-                return request
-            }, error => {
-                onClose()
-                return Promise.reject(error)
-            }
-        )
-
-        instance.interceptors.response.use(
-            response => {
-                // intercept response...
-                closeLoading()
-                return response
-            },
-            error => {
-                // intercept errors
-                closeLoading()
-                return Promise.reject(error)
-            }
-        )
         return instance
     }
 
@@ -141,8 +117,6 @@ export default function AuthProvider({children}: PropsWithChildren): React.React
                 })
             }
         }
-
-
     }
 
     const checkLogin = async () => {

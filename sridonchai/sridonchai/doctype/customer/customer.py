@@ -39,48 +39,89 @@ class Customer(Document):
 def search():
 	req = frappe.form_dict
 	fields = req['fields'] if 'fields' in req else "*"
-	frappe.session.user = 'rewadee@sridonchai.chaowdev.xyz'
+
+	import datetime
+	now = datetime.datetime.now()
+	month = now.month
+	year = now.year
+
+	monthcheck = f"{month:>02}-{year:>04}"
+
+	customer: Customer = frappe.qb.DocType('Customer')
+	manager: CustomerManager = frappe.qb.DocType('CustomerManager')
+	manage = frappe.qb.DocType('CustomerManagerChild')
+	invoice = frappe.qb.DocType("Invoice")
+
 	if frappe.session.user == 'Administrator':
 
-		customers = frappe.db.get_list("Customer", fields=fields)
-		return customers
+		result = frappe.db.sql("""
+					select customer.name,
+		       customer.firstname,
+		       customer.lastname,
+		       customer.meter_address,
+		       sum(inv.total) as total,
+		       curinv.status as curinv_status,
+		       curinv.month as curinv_month
 
-	else:
-
-		customer: Customer = frappe.qb.DocType('Customer')
-		manager: CustomerManager = frappe.qb.DocType('CustomerManager')
-		manage = frappe.qb.DocType('CustomerManagerChild')
-		invoice = frappe.qb.DocType("Invoice")
-
-		sum_total = frappe.qb.functions('Sum',invoice.total).as_('total')
-
-		query = frappe.qb.select(customer.name, customer.firstname, customer.lastname, customer.meter_address,sum_total)\
-			.from_(manager)\
-			.join(manage).on(manage.parent == manager.name)\
-			.join(customer).on(manage.customer == customer.name)\
-			.left_join(invoice).on((customer.name == invoice.customer) & ((invoice.status == 'Draft') | (invoice.status == 'Submitted')))\
-			.groupby(customer.name)\
-			.orderby(customer.name)\
-			.where( (manager.name == frappe.session.user))
-
-
-		result = (query).run(as_dict=True)
+				from tabCustomerManager as manager
+						 join tabCustomerManagerChild as chd on manager.name = chd.parent
+						 join tabCustomer as customer on chd.customer = customer.name
+						 left join tabInvoice as inv on inv.customer = chd.customer and inv.status in ('Draft', 'Submitted')
+						 left join tabInvoice as curinv
+								   on curinv.customer = chd.customer
+									   and curinv.month = %(current_month)s
+									   and curinv.status in ('Draft', 'Submitted', 'Paid')
+				group by chd.customer
+				""", {
+			'current_user': frappe.session.user,
+			'current_month': monthcheck
+		}, as_dict=True)
 
 		return result
 
+	else:
+
+
+		result = frappe.db.sql("""
+			select customer.name,
+       customer.firstname,
+       customer.lastname,
+       customer.meter_address,
+       sum(inv.total) as total,
+       curinv.status as curinv_status,
+       curinv.month as curinv_month
+
+		from tabCustomerManager as manager
+				 join tabCustomerManagerChild as chd on manager.name = chd.parent
+				 join tabCustomer as customer on chd.customer = customer.name
+				 left join tabInvoice as inv on inv.customer = chd.customer and inv.status in ('Draft', 'Submitted')
+				 left join tabInvoice as curinv
+						   on curinv.customer = chd.customer
+							   and curinv.month = %(current_month)s
+							   and curinv.status in ('Draft', 'Submitted', 'Paid')
+				where manager = %(current_user)s
+		group by chd.customer
+		""", {
+			'current_user': frappe.session.user,
+			'current_month': monthcheck
+		}, as_dict=True)
+
+
+		return result
+
+
 @frappe.whitelist()
 def load_customer():
-
 	customer_name = frappe.form_dict['customer'] if 'customer' in frappe.form_dict else None
-	if(customer_name) :
-		customer = frappe.get_doc("Customer",customer_name)
-		invoices = frappe.db.get_list('Invoice',fields="*",filters={
-			'customer' : customer_name
-		},order_by="name desc")
+	if (customer_name):
+		customer = frappe.get_doc("Customer", customer_name)
+		invoices = frappe.db.get_list('Invoice', fields="*", filters={
+			'customer': customer_name
+		}, order_by="name desc")
 
 		return {
-			"customer" : customer,
-			"invoices" : invoices
+			"customer": customer,
+			"invoices": invoices
 		}
 
 	return
