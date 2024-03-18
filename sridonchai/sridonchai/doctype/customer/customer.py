@@ -58,7 +58,7 @@ def search():
 			.from_(manager)\
 			.join(manage).on(manage.parent == manager.name)\
 			.join(customer).on(manage.customer == customer.name)\
-			.left_join(invoice).on((customer.name == invoice.customer) & (invoice.status == 'Draft'))\
+			.left_join(invoice).on((customer.name == invoice.customer) & ((invoice.status == 'Draft') | (invoice.status == 'Submitted')))\
 			.groupby(customer.name)\
 			.orderby(customer.name)\
 			.where( (manager.name == frappe.session.user))
@@ -83,4 +83,4 @@ def load_customer():
 			"invoices" : invoices
 		}
 
-	return 
+	return

@@ -53,7 +53,7 @@ export default function CustomerSearch() {
                     <p className="font-bold">หมายเลขผู้ใช้น้ำ : {customer.name}</p>
                     <p className="font-bold">{customer.firstname} {customer.lastname}</p>
                     <p>ที่อยู่ : {customer.meter_address}</p>
-                    <p>ยอดค้างชำระ : {customer.total_unpaid ?? '-'} บาท</p>
+                    <p>ยอดค้างชำระ : {customer.total ?? '-'} บาท</p>
                 </CardBody>
             </Card>
         )
