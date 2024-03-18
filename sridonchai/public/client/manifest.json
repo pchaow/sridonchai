@@ -1,0 +1,16 @@
+{
+  "name" : "หมู่บ้านศรีดอนชัย",
+  "short_name" : "SRD",
+  "description": "ระบบจัดเก็บค่าน้ำประปาหมู่บ้าน",
+  "start_url" : "/client",
+  "display" : "standalone",
+  "background_color" : "#FFFFFF",
+  "theme_color" : "#000000",
+  "icons": [
+    {
+      "src" : "vite.svg",
+      "sizes" : "192x19x",
+      "type" : "image/svg"
+    }
+  ]
+}

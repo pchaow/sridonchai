@@ -1,6 +1,6 @@
 # Copyright (c) 2024, chaow porkaew and contributors
 # For license information, please see license.txt
-
+import frappe
 # import frappe
 from frappe.model.document import Document
 
@@ -19,3 +19,8 @@ class WaterBillConfig(Document):
 	# end: auto-generated types
 
 	pass
+
+
+@frappe.whitelist()
+def load():
+	return frappe.get_doc("WaterBillConfig")

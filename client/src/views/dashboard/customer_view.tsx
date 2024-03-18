@@ -20,7 +20,7 @@ import {
 } from "@nextui-org/react";
 import {IoArrowBack} from "react-icons/io5";
 import {useNavigate, useParams} from "react-router-dom";
-import {FaPen, FaMoneyBill} from "react-icons/fa6";
+import {FaPen, FaMoneyBill,FaReceipt} from "react-icons/fa6";
 
 
 export default function CustomerView() {
@@ -158,8 +158,16 @@ export default function CustomerView() {
                     บันทึกมาตรน้ำ
                 </Button>
 
-                <Button color="secondary" startContent={<FaMoneyBill/>}>
+                <Button color="secondary" startContent={<FaMoneyBill/>} onClick={() => {
+                    navigate(`/home/customer/${customerName}/payment`)
+                }}>
                     ชำระเงิน
+                </Button>
+
+                <Button color="default" startContent={<FaReceipt/>} onClick={() => {
+                    navigate(`/home/customer/${customerName}/receipt`)
+                }}>
+                    ใบเสร็จรับเงิน
                 </Button>
             </div>
         </div>

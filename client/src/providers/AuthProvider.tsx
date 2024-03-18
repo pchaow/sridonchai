@@ -23,6 +23,12 @@ export default function AuthProvider({children}: PropsWithChildren): React.React
     const {axios, client, setClient, url, clientId} = useAppProvider()
 
     const [user, setUser] = useState(null)
+    const gotoLogin = () => {
+        if (window.location.href != `${document.location.origin}/client/`) {
+            window.location.href = `${document.location.origin}/client/`
+        }
+
+    }
 
     const oauth = useOAuth2({
         authorizeUrl: url + "/api/method/frappe.integrations.oauth2.authorize",
@@ -31,12 +37,13 @@ export default function AuthProvider({children}: PropsWithChildren): React.React
         scope: "all openid",
         responseType: "code",
         exchangeCodeForTokenQueryFn: (callbackParameters) => {
+            localStorage.setItem('code', callbackParameters.code)
             console.log(callbackParameters)
             return axios.post("/api/method/frappe.integrations.oauth2.get_token", {
                 code: callbackParameters.code,
                 grant_type: "authorization_code",
                 client_id: clientId,
-                redirect_uri: `${document.location.origin}/client/login`
+                redirect_uri: `${document.location.origin}/client/login`,
             }, {
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded"
@@ -83,6 +90,37 @@ export default function AuthProvider({children}: PropsWithChildren): React.React
         return null;
     }
 
+    const refresh_token = () => {
+        let refreshToken = localStorage.getItem('token')
+        let code = localStorage.getItem('code')
+        if (refreshToken) {
+            let data = JSON.parse(refreshToken)
+            let token = data?.refresh_token
+            let secure_client = getSecureClient()
+            if (secure_client) {
+                axios.post("/api/method/frappe.integrations.oauth2.get_token", {
+                    refresh_token: token,
+                    grant_type: "refresh_token",
+                    client_id: clientId,
+                    redirect_uri: `${document.location.origin}/client/login`
+                }, {
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    }
+                }).then(async (response) => {
+                    localStorage.setItem("token", JSON.stringify(response.data))
+                    await checkLogin()
+
+                }).catch(async err => {
+                    //not pass
+                    gotoLogin()
+                })
+            }
+        }
+
+
+    }
+
     const checkLogin = async () => {
         let secure_client = getSecureClient()
         if (secure_client) {
@@ -90,6 +128,9 @@ export default function AuthProvider({children}: PropsWithChildren): React.React
                 console.log("get_logged_user", res)
                 let user_name = res.data.message
                 setUser(user_name)
+            }).catch(async err => {
+                //not pass
+                await refresh_token()
             })
         }
     }

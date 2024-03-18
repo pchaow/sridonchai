@@ -81,7 +81,7 @@ def get_record_invoice_data():
 	prv_month = month_doc.get_prev_month()
 
 	invoice = frappe.qb.DocType("Invoice")
-	if prv_month :
+	if prv_month:
 		list = frappe.get_list("Invoice", fields="*", filters={
 			'month': prv_month.name,
 			'customer': customer,
@@ -93,7 +93,7 @@ def get_record_invoice_data():
 		# 	.where( (invoice.month == prv_month.name) & (invoice.customer == customer) & (invoice.type == invoice_type))).run(as_dict=True)
 
 		last_invoice_doc = list[0] if len(list) > 0 else None
-	else :
+	else:
 		last_invoice_doc = None
 
 	current_list = frappe.get_list("Invoice", fields="*", filters={
@@ -108,3 +108,68 @@ def get_record_invoice_data():
 		'prev_invoice': last_invoice_doc,
 		'current_invoice': current_invoice
 	}
+
+
+@frappe.whitelist()
+def create_update_invoice():
+	invoice = frappe.form_dict["invoice"] if "invoice" in frappe.form_dict else None
+
+	assert invoice != None
+	if 'name' not in invoice:
+		newdoc = {
+			"doctype": "Invoice",
+		}
+		newinv = frappe.new_doc("Invoice")
+		newinv.status = "Submitted"
+		newinv.customer = invoice['customer']
+		newinv.month = invoice['month']
+		newinv.previous_meter_read = invoice['previous_meter_read']
+		newinv.previous_meter_read = invoice['previous_meter_read']
+		newinv.current_meter_read = invoice['current_meter_read']
+		newinv.total_unit = invoice['total_unit']
+		newinv.unit_price = invoice['unit_price']
+		newinv.total = invoice['total']
+		newinv.normal = invoice['normal']
+
+		newinv.insert()
+
+		return {
+			"invoice": newinv
+		}
+
+	else:
+
+		updateinv = frappe.get_doc("Invoice", invoice['name'])
+		updateinv.update(invoice)
+		updateinv.status = invoice['status']
+		updateinv.previous_meter_read = invoice['previous_meter_read']
+		updateinv.current_meter_read = invoice['current_meter_read']
+		updateinv.statutotal_unit = invoice['total_unit']
+		updateinv.unit_price = invoice['unit_price']
+		updateinv.total = invoice['total']
+		updateinv.save()
+
+		return {
+			"invoice": updateinv
+		}
+
+	pass
+
+
+@frappe.whitelist()
+def load_unpiad_invoice():
+	customer_name = frappe.form_dict['customer'] if 'customer' in frappe.form_dict else None
+
+	assert customer_name != None or customer_name != ''
+
+	invoicedoc = frappe.qb.DocType("Invoice")
+	invoices = (
+		frappe.qb.select(invoicedoc.name, invoicedoc.type, invoicedoc.status, invoicedoc.total,invoicedoc.month)
+		.from_(invoicedoc)
+		.where(invoicedoc.customer == customer_name)
+		.where(
+			(invoicedoc.status == "Submitted") | ((invoicedoc.status == "Draft"))
+		)
+	).run(as_dict=True)
+
+	return invoices
