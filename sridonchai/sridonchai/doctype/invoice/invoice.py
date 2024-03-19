@@ -24,10 +24,8 @@ class Invoice(Document):
 		status: DF.Literal["Draft", "Submitted", "Paid", "Cancelled"]
 		total: DF.Currency
 		total_unit: DF.Data | None
-		type: DF.Literal[
-			"\u0e04\u0e48\u0e32\u0e19\u0e49\u0e33", "\u0e04\u0e48\u0e32\u0e1a\u0e33\u0e23\u0e38\u0e07\u0e21\u0e34\u0e40\u0e15\u0e2d\u0e23\u0e4c"]
+		type: DF.Literal["\u0e04\u0e48\u0e32\u0e19\u0e49\u0e33", "\u0e04\u0e48\u0e32\u0e1a\u0e33\u0e23\u0e38\u0e07\u0e21\u0e34\u0e40\u0e15\u0e2d\u0e23\u0e4c"]
 		unit_price: DF.Data | None
-
 	# end: auto-generated types
 
 	def autoname(self):

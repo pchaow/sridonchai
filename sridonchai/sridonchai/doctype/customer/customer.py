@@ -25,7 +25,6 @@ class Customer(Document):
 		personal_id: DF.Data | None
 		phonenumber: DF.Data | None
 		status: DF.Check
-
 	# end: auto-generated types
 
 	def before_insert(self):

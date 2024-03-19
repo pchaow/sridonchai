@@ -25,7 +25,6 @@ class Receipt(Document):
 		payor: DF.Link | None
 		status: DF.Literal["Draft", "Submitted", "Cancelled"]
 		total: DF.Currency
-
 	# end: auto-generated types
 
 	def on_cancel(self):

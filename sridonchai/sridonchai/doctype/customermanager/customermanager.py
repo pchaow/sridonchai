@@ -13,8 +13,7 @@ class CustomerManager(Document):
 
 	if TYPE_CHECKING:
 		from frappe.types import DF
-		from sridonchai.sridonchai.doctype.customermanagerchild.customermanagerchild import \
-			CustomerManagerChild
+		from sridonchai.sridonchai.doctype.customermanagerchild.customermanagerchild import CustomerManagerChild
 
 		customers: DF.Table[CustomerManagerChild]
 		manager: DF.Link

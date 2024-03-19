@@ -11,8 +11,8 @@ interface AuthProviderContextInterface<TData = TAuthTokenPayload> {
     logout: () => void;
     isPersistent: boolean;
 
-    getSecureClient: () => AxiosInstance;
-    user: string;
+    getSecureClient: () => AxiosInstance|null;
+    user: string|null;
     checkLogin: () => Promise<void>
 }
 
@@ -22,7 +22,7 @@ export default function AuthProvider({children}: PropsWithChildren): React.React
 
     const {axios, client, setClient, url, clientId} = useAppProvider()
 
-    const [user, setUser] = useState(null)
+    const [user, setUser] = useState(null as string|null)
     const gotoLogin = () => {
         if (window.location.href != `${document.location.origin}/client/`) {
             window.location.href = `${document.location.origin}/client/`
