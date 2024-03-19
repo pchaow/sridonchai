@@ -25,7 +25,6 @@ class CustomerManager(Document):
 
 @frappe.whitelist()
 def load_report():
-	
 
 	monthcheck = frappe.form_dict['month']
 	#monthcheck = "01-2023"
