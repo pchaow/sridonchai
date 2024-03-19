@@ -27,7 +27,7 @@ class CustomerManager(Document):
 def load_report():
 	
 
-	monthcheck = frappe.form_dict['month']['currentKey']
+	monthcheck = frappe.form_dict['month']
 	#monthcheck = "01-2023"
 
 	result = frappe.db.sql("""

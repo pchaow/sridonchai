@@ -35,23 +35,31 @@ export default function ManagerReport() {
     const [report, setReport] = useState([])
 
     const load_report = async (month) => {
-        showLoading()
-        let { message } = await client.post("/api/method/sridonchai.sridonchai.doctype.customermanager.customermanager.load_report", {
-            'month': month
-        }).then(r => r.data).catch(err => {
+        
+        if(month) {
+            showLoading()
+            let response = await client.post("/api/method/sridonchai.sridonchai.doctype.customermanager.customermanager.load_report", {
+                'month': month
+            }).then(r => r.data).catch(err => {
+                closeLoading()
+            })
+
             closeLoading()
-        })
-        closeLoading()
-        console.log(message)
-        setReport(message)
+            if(response?.message){
+                setReport(response.message)
+            }else {
+                setReport([])
+            }
+            
+        }
+        
+       
     }
 
-    useEffect(()=>{
-        load_report(month)
-    },[month])
-
     const setMonth = (keys: React.Key[]) => {
-        _setMonth(keys)
+        let firstkey = keys.values().next().value
+        _setMonth(new Set([firstkey]))
+        load_report(firstkey)
     }
     const load_months = async () => {
         showLoading()

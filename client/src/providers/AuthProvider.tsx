@@ -90,6 +90,18 @@ export default function AuthProvider({children}: PropsWithChildren): React.React
         return null;
     }
 
+    
+    const getRefreshTokenFromLocalStorage = () => {
+        let payload = localStorage.getItem('token')
+        if (payload) {
+            let payload_data = JSON.parse(payload)
+            if (payload_data.refresh_token) {
+                return payload_data.refresh_token
+            }
+        }
+        return null;
+    }
+
     const refresh_token = () => {
         let refreshToken = localStorage.getItem('token')
         let code = localStorage.getItem('code')
@@ -144,10 +156,28 @@ export default function AuthProvider({children}: PropsWithChildren): React.React
         }
     }, [user])
 
+    const doLogout = async () => {
+        let client = getSecureClient()
+        let token = getTokenFromLocalStorage()
+        let refresh_token = getRefreshTokenFromLocalStorage()
+        await axios?.post("/api/method/frappe.integrations.oauth2.revoke_token", {
+            token : token
+        }, {
+            headers : {
+                "Content-Type" : "application/x-www-form-urlencoded"
+            }
+        }).then(r=>{
+            localStorage.removeItem('token')
+            localStorage.removeItem('code')
+        })
+        oauth.logout()
+
+    }
+
 
     return (
         <AuthProviderContext.Provider
-            value={{...oauth, getSecureClient, checkLogin, user}}>{children}</AuthProviderContext.Provider>
+            value={{...oauth, getSecureClient, checkLogin, user,logout : doLogout}}>{children}</AuthProviderContext.Provider>
     )
 }
 
