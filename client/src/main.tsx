@@ -4,7 +4,6 @@ import App from './App.tsx'
 import './index.css'
 
 import * as serviceWorkerRegistration from './serviceWorkerRegistration.ts';
-import reportWebVitals from './reportWebVitals.ts';
 
 
 
@@ -15,5 +14,4 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 )
 
 serviceWorkerRegistration.unregister();
-reportWebVitals();
 

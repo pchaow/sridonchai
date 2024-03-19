@@ -20,7 +20,7 @@ export const AuthProviderContext = createContext<AuthProviderContextInterface>({
 
 export default function AuthProvider({children}: PropsWithChildren): React.ReactElement | null {
 
-    const {axios, client, setClient, url, clientId} = useAppProvider()
+    const {axios, url, clientId} = useAppProvider()
 
     const [user, setUser] = useState(null as string|null)
     const gotoLogin = () => {
@@ -104,7 +104,6 @@ export default function AuthProvider({children}: PropsWithChildren): React.React
 
     const refresh_token = () => {
         let refreshToken = localStorage.getItem('token')
-        let code = localStorage.getItem('code')
         if (refreshToken) {
             let data = JSON.parse(refreshToken)
             let token = data?.refresh_token
@@ -123,7 +122,7 @@ export default function AuthProvider({children}: PropsWithChildren): React.React
                     localStorage.setItem("token", JSON.stringify(response.data))
                     await checkLogin()
 
-                }).catch(async err => {
+                }).catch(async () => {
                     //not pass
                     gotoLogin()
                 })
@@ -138,7 +137,7 @@ export default function AuthProvider({children}: PropsWithChildren): React.React
                 console.log("get_logged_user", res)
                 let user_name = res.data.message
                 setUser(user_name)
-            }).catch(async err => {
+            }).catch(async () => {
                 //not pass
                 await refresh_token()
             })
@@ -157,16 +156,24 @@ export default function AuthProvider({children}: PropsWithChildren): React.React
     }, [user])
 
     const doLogout = async () => {
-        let client = getSecureClient()
         let token = getTokenFromLocalStorage()
-        let refresh_token = getRefreshTokenFromLocalStorage()
         await axios?.post("/api/method/frappe.integrations.oauth2.revoke_token", {
             token : token
         }, {
             headers : {
                 "Content-Type" : "application/x-www-form-urlencoded"
             }
-        }).then(r=>{
+        }).then(()=>{
+            
+        }).catch(async ()=>{
+            // await axios?.post("/api/method/frappe.integrations.oauth2.revoke_token", {
+            //     refresh_token : getRefreshTokenFromLocalStorage()
+            // }, {
+            //     headers : {
+            //         "Content-Type" : "application/x-www-form-urlencoded"
+            //     }
+            // })  
+        }).finally(()=>{
             localStorage.removeItem('token')
             localStorage.removeItem('code')
             setUser(null)
