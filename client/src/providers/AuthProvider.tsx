@@ -169,6 +169,7 @@ export default function AuthProvider({children}: PropsWithChildren): React.React
         }).then(r=>{
             localStorage.removeItem('token')
             localStorage.removeItem('code')
+            setUser(null)
         })
         oauth.logout()
 

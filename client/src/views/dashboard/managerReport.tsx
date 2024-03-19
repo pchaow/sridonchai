@@ -111,7 +111,7 @@ export default function ManagerReport() {
 
                 {
                     report.map(x => (
-                        <Card>
+                        <Card key={x.manager.name}>
                             <CardBody className="justify-center items-center">
                                 <p className="text-xl">{x.manager.firstname} {x.manager.lastname}</p>
 
@@ -132,6 +132,8 @@ export default function ManagerReport() {
                                                 minValue={0}
                                                 maxValue={x.report.total}
                                                 strokeWidth={4}
+                                                aria-label="จดมิเตอร์แล้ว"
+
                                                 showValueLabel={true}
                                             />
                                         </CardBody>
@@ -167,6 +169,8 @@ export default function ManagerReport() {
                                                 maxValue={x.report.total}
                                                 strokeWidth={4}
                                                 showValueLabel={true}
+                                                aria-label="ชำระเงินแล้ว"
+
                                             />
                                         </CardBody>
                                         <CardFooter className="justify-center items-center pt-0">

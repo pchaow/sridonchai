@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
 
+import * as serviceWorkerRegistration from './serviceWorkerRegistration.ts';
+import reportWebVitals from './reportWebVitals.ts';
+
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
@@ -10,3 +13,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <App />
   </React.StrictMode>,
 )
+
+serviceWorkerRegistration.unregister();
+reportWebVitals();
+
